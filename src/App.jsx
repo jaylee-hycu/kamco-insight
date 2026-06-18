@@ -5,12 +5,15 @@ import RegionChart from './components/RegionChart'
 import AmountChart from './components/AmountChart'
 import DspsChart from './components/DspsChart'
 import SearchTable from './components/SearchTable'
+import BidrateChart from './components/BidrateChart'
 
 function App() {
   const [trendData, setTrendData] = useState([])
   const [regionData, setRegionData] = useState([])
   const [amountData, setAmountData] = useState([])
   const [dspsData, setDspsData] = useState([])
+  const [bidrateRegion, setBidrateRegion] = useState([])
+  const [bidrateprpt, setBidrateprpt] = useState([])
   const [summary, setSummary] = useState({ total: 0, amount: 0 })
   const [loading, setLoading] = useState(true)
 
@@ -36,6 +39,12 @@ function App() {
     // 처분방식 파이차트 (수의/입찰 비율)  
     const { data: dsps } = await supabase.rpc('get_sale_by_dsps')
     if (dsps) setDspsData(dsps)  
+
+    const { data: brRegion } = await supabase.rpc('get_bidrate_by_region')
+    if (brRegion) setBidrateRegion(brRegion)
+
+    const { data: brPrpt } = await supabase.rpc('get_bidrate_by_prpt')
+    if (brPrpt) setBidrateprpt(brPrpt)  
 
     // 전체 요약
     const { count } = await supabase
@@ -90,6 +99,16 @@ function App() {
         <ChartCard title="🏷️ 처분방식별 비율">
           <DspsChart data={dspsData} />
         </ChartCard>
+      </div>
+
+      <div style={{
+        background: '#1a1d27', borderRadius: 12, padding: 24,
+        border: '1px solid #2d3148', marginTop: 24
+      }}>
+        <h3 style={{ color: '#e5e7eb', fontSize: 15, fontWeight: 600, margin: '0 0 20px' }}>
+          📉 체납압류재산 낙찰가율 분석
+        </h3>
+        <BidrateChart regionData={bidrateRegion} prptData={bidrateprpt} />
       </div>
 
       {/* 검색 테이블 - 여기로 이동 */}
