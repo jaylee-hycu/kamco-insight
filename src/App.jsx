@@ -6,6 +6,7 @@ import AmountChart from './components/AmountChart'
 import DspsChart from './components/DspsChart'
 import SearchTable from './components/SearchTable'
 import BidrateChart from './components/BidrateChart'
+import ScoreTable from './components/ScoreTable'
 
 function App() {
   const [trendData, setTrendData] = useState([])
@@ -109,6 +110,16 @@ function App() {
           📉 체납압류재산 낙찰가율 분석
         </h3>
         <BidrateChart regionData={bidrateRegion} prptData={bidrateprpt} />
+      </div>
+
+      <div style={{
+        background: '#1a1d27', borderRadius: 12, padding: 24,
+        border: '1px solid #2d3148', marginTop: 24
+      }}>
+        <h3 style={{ color: '#e5e7eb', fontSize: 15, fontWeight: 600, margin: '0 0 20px' }}>
+          🎯 AI 저평가 물건 스코어링
+        </h3>
+        <ScoreTable />
       </div>
 
       {/* 검색 테이블 - 여기로 이동 */}
